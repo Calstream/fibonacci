@@ -42,28 +42,30 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       contentAsString(home) must include ("Fibonacci")
     }
 
-/*    "process a POST request successfully" in {
-      // Pull the controller from the already running Play application, using Injecting
+    "reject a POST request when given bad input(less than minimum)" in {
       val controller = inject[HomeController]
-
-      // Call using the FakeRequest and the correct body information and CSRF token
-      val request = FakeRequest(routes.HomeController.createWidget())
-        .withFormUrlEncodedBody("length" -> "17")
-        //.withCSRFToken
-      val futureResult: Future[Result] = controller.createWidget().apply(request)
-
-      // And we can get the results out using Scalatest's "Futures" trait, which gives us whenReady
-      whenReady(futureResult) { result =>
-        result.header.headers(LOCATION) must equal(routes.WidgetController.listWidgets().url)
-      }
-    }
-*/
-    "reject a POST request when given bad input" in {
-      val controller = inject[HomeController]
-
-      // Call the controller with negative price...
       val request = FakeRequest(routes.HomeController.createWidget())
         .withFormUrlEncodedBody("length" -> "0")
+
+      val futureResult: Future[Result] = controller.createWidget().apply(request)
+
+      status(futureResult) must be(Status.BAD_REQUEST)
+    }
+
+    "reject a POST request when given bad input(greater than maximum)" in {
+      val controller = inject[HomeController]
+      val request = FakeRequest(routes.HomeController.createWidget())
+        .withFormUrlEncodedBody("length" -> "73")
+
+      val futureResult: Future[Result] = controller.createWidget().apply(request)
+
+      status(futureResult) must be(Status.BAD_REQUEST)
+    }
+
+    "reject a POST request when given bad input(not a number)" in {
+      val controller = inject[HomeController]
+      val request = FakeRequest(routes.HomeController.createWidget())
+        .withFormUrlEncodedBody("length" -> "-0ef")
 
       val futureResult: Future[Result] = controller.createWidget().apply(request)
 
