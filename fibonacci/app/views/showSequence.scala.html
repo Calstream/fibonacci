@@ -1,0 +1,47 @@
+@(fibs: Seq[Int], form: Form[InputForm.Data], postUrl: Call)(implicit request: MessagesRequestHeader)
+@main("Fib") {
+<h1>Enter sequence length</h1>
+
+<small>
+
+    @helper.form(postUrl) {
+    @helper.CSRF.formField
+    @helper.inputText(form("length"),
+    '_label -> "",
+    'size -> "5")
+
+
+
+    <dd><button>Show sequence</button></dd>
+}
+
+    </small>
+<br/>
+<br/>
+<hr/>
+
+@* Global errors are not tied to any particular form field *@
+@if(form.hasGlobalErrors) {
+@form.globalErrors.map { error: FormError =>
+<div>
+    @error.key: @error.message
+</div>
+}
+}
+
+
+
+@if(!fibs.isEmpty){
+<b><u>Fibonacci numbers:</u></b>
+
+    @for(f <- fibs) {
+    @f
+    }
+}
+}
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
