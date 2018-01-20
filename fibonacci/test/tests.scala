@@ -78,5 +78,21 @@ class tests extends PlaySpec{
       message must equal("Must be less or equal to 47")
     }
 
+    "show errors when applied unsuccessfully(not a number)" in {
+      val inp = Map("length" -> "text")
+      val errorForm = InputForm.inputform.bind(inp)
+      val listOfErrors = errorForm.errors
+      val formError: FormError = listOfErrors.head
+      formError.key must equal("length")
+      errorForm.hasGlobalErrors mustBe false
+      formError.message must equal("error.number")
+      val lang: Lang = Lang.defaultLang
+      val messagesApi: MessagesApi = new DefaultMessagesApi(Map(lang.code -> Map("error.number" -> "Numeric value expected")))
+      val messagesProvider: MessagesProvider = messagesApi.preferred(Seq(lang))
+      val message: String = Messages(formError.message, formError.args: _*)(messagesProvider)
+      message must equal("Numeric value expected")
+    }
+
+
   }
 }

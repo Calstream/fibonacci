@@ -54,8 +54,8 @@ class HomeController @Inject()(cc: MessagesControllerComponents) extends Message
         index += 1
       }
       Redirect(routes.HomeController.listWidgets()).flashing("" -> "")
-    }
 
+    }
     val formValidationResult = inputform.bindFromRequest
     formValidationResult.fold(errorFunction, successFunction)
   }
