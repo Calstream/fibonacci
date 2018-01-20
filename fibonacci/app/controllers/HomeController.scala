@@ -44,6 +44,7 @@ class HomeController @Inject()(cc: MessagesControllerComponents) extends Message
 
     val successFunction = { data: Data =>
       // This is the good case, where the form was successfully parsed as a Data object.
+      sequence.clear()
       sequence.append(0)
       sequence.append(1)
       var index = 2
