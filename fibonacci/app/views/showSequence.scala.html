@@ -1,10 +1,10 @@
 @(fibs: Seq[Int], form: Form[InputForm.Data], postUrl: Call)(implicit request: MessagesRequestHeader)
-@main("Fib") {
+@main("Fibonacci") {
 <h1>Enter sequence length</h1>
 
 <small>
     @helper.form(postUrl) {
-    @helper.CSRF.formField
+
     @helper.inputText(form("length"),
     '_label -> "",
     'size -> "5")
