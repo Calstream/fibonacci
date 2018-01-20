@@ -1,9 +1,6 @@
 package controllers
 
 import javax.inject._
-
-
-import play.api._
 import play.api.data.Form
 import play.api.mvc._
 
@@ -23,7 +20,6 @@ class HomeController @Inject()(cc: MessagesControllerComponents) extends Message
    */
   private val sequence = scala.collection.mutable.ArrayBuffer[Int]()
   private val postUrl = routes.HomeController.createWidget()
-  private val debug_message = "ERROR"
 
   def index = Action {
     Ok(views.html.index())

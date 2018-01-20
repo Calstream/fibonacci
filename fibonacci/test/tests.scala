@@ -1,12 +1,8 @@
 import org.scalatestplus.play._
-import org.scalatestplus.play.guice._
 import play.api.mvc.Request
-import play.api.test._
-import play.api.test.Helpers._
 import controllers.InputForm
 import play.api.data.FormError
 import play.api.i18n._
-import play.api.mvc._
 import play.api.test._
 class tests extends PlaySpec{
 

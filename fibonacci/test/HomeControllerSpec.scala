@@ -1,11 +1,6 @@
 package controllers
 
-import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
-import play.api.test._
-import play.api.test.Helpers._
-import play.api.http.Status
-import org.scalatest.concurrent.ScalaFutures
 import scala.concurrent.Future
 import org.scalatestplus.play.PlaySpec
 import play.api.http.Status
@@ -20,8 +15,6 @@ import play.api.test._
   */
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
 
-  private val sequence = scala.collection.mutable.ArrayBuffer[Int]()
-  private val postUrl = routes.HomeController.createWidget()
   "HomeController" should {
 
     "render the index page from the application(GET)" in {
