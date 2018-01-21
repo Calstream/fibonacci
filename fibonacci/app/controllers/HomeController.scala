@@ -19,17 +19,17 @@ class HomeController @Inject()(cc: MessagesControllerComponents) extends Message
    * a path of `/`.
    */
   private val sequence = scala.collection.mutable.ArrayBuffer[Int]()
-  private val postUrl = routes.HomeController.createWidget()
+  private val postUrl = routes.HomeController.ShowSequence()
 
   def index = Action {
     Ok(views.html.index())
   }
 
-  def listWidgets = Action { implicit request: MessagesRequest[AnyContent] =>
+  def showInputForm = Action { implicit request: MessagesRequest[AnyContent] =>
     // Pass an unpopulated form to the template
     Ok(views.html.showSequence(sequence, inputform, postUrl))
   }
-  def createWidget = Action { implicit request: MessagesRequest[AnyContent] =>
+  def ShowSequence = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[Data]=>
       // This is the bad case, where the form had validation errors.
       // Let's show the user the form again, with the errors highlighted.
@@ -49,7 +49,7 @@ class HomeController @Inject()(cc: MessagesControllerComponents) extends Message
         sequence.append(c)
         index += 1
       }
-      Redirect(routes.HomeController.listWidgets()).flashing("" -> "")
+      Redirect(routes.HomeController.showInputForm()).flashing("" -> "")
 
     }
     val formValidationResult = inputform.bindFromRequest

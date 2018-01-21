@@ -10,7 +10,7 @@ class tests extends PlaySpec{
 
     "apply successfully from request" in {
       // The easiest way to test a form is by passing it a fake request.
-      val call = controllers.routes.HomeController.createWidget()
+      val call = controllers.routes.HomeController.ShowSequence()
       implicit val request: Request[_] = FakeRequest(call).withFormUrlEncodedBody("length" -> "37")
       // A successful binding using an implicit request will give you a form with a value.
       val boundForm = InputForm.inputform.bindFromRequest()
