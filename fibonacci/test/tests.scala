@@ -1,9 +1,10 @@
-import org.scalatestplus.play._
-import play.api.mvc.Request
 import controllers.InputForm
+import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError
 import play.api.i18n._
+import play.api.mvc._
 import play.api.test._
+
 class tests extends PlaySpec{
 
   "inputForm" must {
@@ -89,6 +90,19 @@ class tests extends PlaySpec{
       message must equal("Numeric value expected")
     }
 
-
+    "show errors when applied unsuccessfully(empty)" in {
+      val inp = Map("length" -> "")
+      val errorForm = InputForm.inputform.bind(inp)
+      val listOfErrors = errorForm.errors
+      val formError: FormError = listOfErrors.head
+      formError.key must equal("length")
+      errorForm.hasGlobalErrors mustBe false
+      formError.message must equal("error.number")
+      val lang: Lang = Lang.defaultLang
+      val messagesApi: MessagesApi = new DefaultMessagesApi(Map(lang.code -> Map("error.number" -> "Numeric value expected")))
+      val messagesProvider: MessagesProvider = messagesApi.preferred(Seq(lang))
+      val message: String = Messages(formError.message, formError.args: _*)(messagesProvider)
+      message must equal("Numeric value expected")
+    }
   }
 }
